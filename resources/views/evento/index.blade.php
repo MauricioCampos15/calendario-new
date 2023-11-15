@@ -12,7 +12,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form >
+                    <form id="formulario">
 
                       {!! csrf_field() !!}
 

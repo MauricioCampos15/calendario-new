@@ -50,38 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   calendar.render();
 
-  // document.getElementById("btnGuardar").addEventListener("click"), function () {
 
-  //   const datos = new FormData(formulario)
 
-  //   console.log(datos)
-
-  //   axios.post("http://127.0.0.1:8000/evento/agregar", datos).
-  //     then(
-  //       (respuesta) => {
-  //         calendar.refetchEvents();
-  //         $("#evento").modal("hide");
-  //       }
-  //     ).catch(
-  //       error => {
-  //         if (error.response) {
-  //           console.log(error.response.data);
-  //         }
-  //       }
-  //     )
-  // }
-
-  document.getElementById("btnGuardar").addEventListener("click"), function () {
+  document.getElementById("btnGuardar").addEventListener("click", function () {
     enviarDatos("http://127.0.0.1:8000/evento/agregar");
-  }
+  });
   
-  document.getElementById("btnEliminar").addEventListener("click"), function () {
-    enviarDatos("http://127.0.0.1:8000/evento/borrar" + formulario.id.value);
-  }
 
   function enviarDatos(url) {
     const datos = new FormData(formulario)
-    // const nuevaURL =
     axios.post(url, datos).
     then(
       (respuesta) => {
@@ -93,6 +70,27 @@ document.addEventListener('DOMContentLoaded', function () {
     )
   }
 
+  });
+  const formulario = document.getElementById("formulario");
 
-
+  document.getElementById("btnEliminar").addEventListener("click", function () {
+    // alert(formulario.id.value)
+    
+    enviarDatos("http://127.0.0.1:8000/evento/borrar/" + formulario.id.value);
 });
+
+function enviarDatos(url) {
+  const datos= new FormData(formulario);
+
+    axios.post(url, datos)
+        .then((respuesta) => {
+            calendar.refetchEvents();
+            $("#evento").modal("hide");
+        })
+        .catch(error => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+}
+
